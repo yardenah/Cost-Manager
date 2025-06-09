@@ -1,7 +1,18 @@
 const express = require('express'); // Import the Express framework
 const router = express.Router(); // Create an Express router instance
 const Cost = require('../models/cost'); // Import the Cost model
-// const User = require('../models/user'); // Uncomment if user data is needed in the future
+const User = require('../models/user'); // Import the User model
+
+/**
+ * @function userExists
+ * @description Utility function to check if a user exists in the database
+ * @param {string} id - The user ID to search for
+ * @returns {Promise<boolean>} Whether the user exists
+ */
+async function userExists(id) {
+  const user = await User.findOne({ id });
+  return !!user;
+}
 
 /**
  * @route POST /add
@@ -30,6 +41,13 @@ router.post('/add', async (req, res) => {
             return res.status(400).json({
                 error: 'Bad Request',
                 message: "Missing required fields: 'sum', 'category', or 'description'."
+            });
+        }
+
+        // Check if the user exists
+        if (!(await userExists(userid))) {
+            return res.status(404).json({
+                error: 'User Not Found'
             });
         }
 
@@ -79,6 +97,13 @@ router.get('/report', async (req, res) => {
             return res.status(400).json({
                 error: 'Bad Request',
                 message: "Missing 'month' query parameter."
+            });
+        }
+
+        // Check if the user exists
+        if (!(await userExists(id))) {
+            return res.status(404).json({
+                error: 'User Not Found'
             });
         }
 

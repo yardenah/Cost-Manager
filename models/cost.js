@@ -3,7 +3,6 @@
  * @module models/Cost
  */
 
-
 // Load Mongoose module for MongoDB interaction
 const mongoose = require('mongoose');
 
