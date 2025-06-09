@@ -21,12 +21,12 @@ const router = express.Router();
 router.get('/about', (req, res) => {
   res.json([
     {
-      firstname: 'Yarden',
-      lastname: 'Aharon'
+      first_name: 'Yarden',
+      last_name: 'Aharon'
     },
     {
-      firstname: 'Dana',
-      lastname: 'Oshri'
+      first_name: 'Dana',
+      last_name: 'Oshri'
     }
   ]);
 });
